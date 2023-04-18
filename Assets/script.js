@@ -3,20 +3,27 @@ cityInput=document.querySelector('#cityInput');
 
 function getCityWeather(event){
     event.preventDefault();
-    console.log("test");
     city=cityInput.value;
     let latitude, longitude=getCoordinates(city);
-   // weatherData=getAPI(city,latitude,longitude)
+    weatherData=getAPI(city,latitude,longitude)
 }
 function getCoordinates(city){
-    let url="http://api.openweathermap.org/geo/1.0/direct?q="+city+"&limit=5&appid={30938dd6fcd531961e9f7d4e28342bde}"
+    city="austin"
+    let url="http://api.openweathermap.org/geo/1.0/direct?q="+city+"&limit=5&appid=30938dd6fcd531961e9f7d4e28342bde"
+    let responseData;
     fetch(url)
     .then(function(response){
         if(!response.ok)
             console.log(response.status)
         else
-            console.log(response.json());
+            console.log(response.json())
+            
     })
+    console.log(responseData);
+
+}
+function getAPI(city, latitude, longitude){
+
 }
 
 
