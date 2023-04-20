@@ -5,7 +5,7 @@ let currentDay=dayjs().format("ddd, MMM D")
 let currentDayWeather=document.querySelector('#weatherData');
 let daysLater=document.querySelectorAll(".daysLater")
 let pastSearchesDiv=document.querySelector("#pastSearches")
-let pastSearches
+let pastSearches=localStorage.getItem("searches")||[]
 
 function getCityWeather(event){
     event.preventDefault();
@@ -70,13 +70,17 @@ function renderPage(data){
     }
 }
 function renderSearch(){
+    pastSearchesDiv.innerHTML="";
     if (localStorage.getItem("searches")==null) {
         pastSearches.push(cityInput.value)
         localStorage.setItem("searches", JSON.stringify(pastSearches));
       } else {
         pastSearches = JSON.parse(localStorage.getItem("searches"));
-        pastSearches.push(cityInput.value);
-        localStorage.setItem("searches", JSON.stringify(pastSearches));
+        if(!pastSearches.includes(cityInput.value)){
+            pastSearches.push(cityInput.value);
+            localStorage.setItem("searches", JSON.stringify(pastSearches));
+        }
+       
       }
       
 
