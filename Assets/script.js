@@ -8,8 +8,11 @@ let pastSearchesDiv=document.querySelector("#pastSearches")
 let pastSearches=localStorage.getItem("searches")||[]
 
 function getCityWeather(event){
+    
     event.preventDefault();
-    city=cityInput.value;
+    let city=this.textContent
+    if(city==="Search")
+        city=cityInput.value
     getCoordinates(city);
     renderSearch();
     
@@ -40,7 +43,6 @@ function getWeather(latitude, longitude){
             console.log(response.status)
         else
             response.json().then(function(data){
-                console.log(data);
                 renderPage(data);
 
             })
@@ -87,7 +89,10 @@ function renderSearch(){
 
     for(let i=0;i<pastSearches.length;i++){
         let newSearch=document.createElement("li")
-        newSearch.innerHTML=pastSearches[i]
+        let newSearchClickable=document.createElement("button")
+        newSearchClickable.innerHTML=pastSearches[i]
+        newSearchClickable.addEventListener("click",getCityWeather)
+        newSearch.append(newSearchClickable);
         pastSearchesDiv.appendChild(newSearch);
     }
 
