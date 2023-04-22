@@ -6,7 +6,8 @@ let currentDayWeather=document.querySelector('#weatherData');
 let daysLater=document.querySelectorAll(".daysLater")
 let pastSearchesDiv=document.querySelector("#pastSearches")
 let pastSearches=localStorage.getItem("searches")||[]
-
+let weatherIcon=document.querySelectorAll('.weatherIcon')
+let firstWeatherIcon=document.querySelector("#firstWeatherIcon");
 function getCityWeather(event){
     
     event.preventDefault();
@@ -14,7 +15,7 @@ function getCityWeather(event){
     if(city==="Search")
         city=cityInput.value
     getCoordinates(city);
-    renderSearch();
+    renderSearch(city);
     
 }
 function getCoordinates(city){
@@ -44,6 +45,7 @@ function getWeather(latitude, longitude){
         else
             response.json().then(function(data){
                 renderPage(data);
+                console.log(data);
 
             })
     })
@@ -55,10 +57,12 @@ function renderPage(data){
     //main weather div
     currentDayWeather.children[0].textContent=data.city.name+","+ data.city.country;
     currentDayWeather.children[1].textContent= currentDay;
-    currentDayWeather.children[2].children[0].textContent="temp: "+data.list[0].main.temp+"°F";
-    currentDayWeather.children[2].children[1].textContent="wind: "+data.list[0].wind.speed+"mph";
-    currentDayWeather.children[2].children[2].textContent="humidty: "+ data.list[0].main.humidity+"%";
+    currentDayWeather.children[3].children[0].textContent="temp: "+data.list[0].main.temp+"°F";
+    currentDayWeather.children[3].children[1].textContent="wind: "+data.list[0].wind.speed+"mph";
+    currentDayWeather.children[3].children[2].textContent="humidty: "+ data.list[0].main.humidity+"%";
+    firstWeatherIcon.src="https://openweathermap.org/img/wn/"+data.list[0].weather[0].icon+"@2x.png"
     weatherDiv.setAttribute("class","col");
+    
     let hourIndex=7
     for(let i=0;i<daysLater.length;i++){
         daysLater[i].parentElement.children[0].textContent=dayjs().add(i+1,"day").format('dddd')
@@ -66,20 +70,23 @@ function renderPage(data){
         daysLater[i].children[0].textContent=data.list[hourIndex].main.temp+"°F";
         daysLater[i].children[1].textContent=data.list[hourIndex].wind.speed+"mph";
         daysLater[i].children[2].textContent=data.list[hourIndex].main.humidity+"%";
+        weatherIcon[i].src="https://openweathermap.org/img/wn/"+data.list[hourIndex].weather[0].icon+"@2x.png"
         hourIndex+=8
 
 
     }
 }
-function renderSearch(){
+function renderSearch(city){
     pastSearchesDiv.innerHTML="";
     if (localStorage.getItem("searches")==null) {
-        pastSearches.push(cityInput.value)
+        if(city){
+            pastSearches.push(city)
+        }
         localStorage.setItem("searches", JSON.stringify(pastSearches));
       } else {
         pastSearches = JSON.parse(localStorage.getItem("searches"));
-        if(!pastSearches.includes(cityInput.value)){
-            pastSearches.push(cityInput.value);
+        if(!pastSearches.includes(city)&& city){
+            pastSearches.push(city);
             localStorage.setItem("searches", JSON.stringify(pastSearches));
         }
        
@@ -102,6 +109,7 @@ function renderSearch(){
 
 
 searchBtn.addEventListener("click", getCityWeather);
+renderSearch(null);
 // GIVEN a weather dashboard with form inputs
 // WHEN I search for a city
 // THEN I am presented with current and future conditions for that city and that city is added to the search history
