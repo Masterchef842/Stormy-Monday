@@ -1,10 +1,21 @@
 *{
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    color: white;
 }
 .hide{
     display:none;
 }
-
+#weather{
+  text-shadow: 1.5px 1.5px black;
+}
+body{
+  height: 100vh;
+  background-image: linear-gradient(blue, white);
+}
+button{
+  color: black;
+  text-shadow: 0;
+}
 
 .work-feature-block {
   padding: 10px 0;
@@ -16,5 +27,9 @@
   display: block;
   margin: auto;
   padding: work-feature-image-offset-padding;
+}
+.card-body{
+  padding: 10px;
+  border: 2px solid white;
 }
 

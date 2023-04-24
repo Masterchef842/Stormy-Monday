@@ -8,6 +8,8 @@ let pastSearchesDiv=document.querySelector("#pastSearches")
 let pastSearches=localStorage.getItem("searches")||[]
 let weatherIcon=document.querySelectorAll('.weatherIcon')
 let firstWeatherIcon=document.querySelector("#firstWeatherIcon");
+
+
 function getCityWeather(event){
     
     event.preventDefault();
@@ -19,7 +21,7 @@ function getCityWeather(event){
     
 }
 function getCoordinates(city){
-    let url="http://api.openweathermap.org/geo/1.0/direct?q="+city+"&limit=1&appid=30938dd6fcd531961e9f7d4e28342bde"
+    let url="https://api.openweathermap.org/geo/1.0/direct?q="+city+"&limit=1&appid=30938dd6fcd531961e9f7d4e28342bde"
     let latitude, longitude;
     fetch(url)
     .then(function(response){
@@ -37,7 +39,7 @@ function getCoordinates(city){
 
 }
 function getWeather(latitude, longitude){
-    let url="http://api.openweathermap.org/data/2.5/forecast?lat="+latitude+"&lon="+longitude+"&appid=30938dd6fcd531961e9f7d4e28342bde&units=imperial"
+    let url="https://api.openweathermap.org/data/2.5/forecast?lat="+latitude+"&lon="+longitude+"&appid=30938dd6fcd531961e9f7d4e28342bde&units=imperial"
     fetch(url)
     .then(function(response){
         if(!response.ok)
