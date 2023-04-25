@@ -5,6 +5,9 @@
 .hide{
     display:none;
 }
+nav{
+  border-bottom: 3px solid white;
+}
 #weather{
   text-shadow: 1.5px 1.5px black;
 }
@@ -15,6 +18,15 @@ body{
 button{
   color: black;
   text-shadow: 0;
+  width:100%;
+  margin: 3px;
+  transition: all 0.2s ease-in-out;
+}
+button:hover{
+  background-color:rgb(48, 46, 46);
+  color: white;
+  box-shadow: 3px 3px 5px rgb(59, 150, 167);
+
 }
 
 .work-feature-block {
@@ -30,6 +42,12 @@ button{
 }
 .card-body{
   padding: 10px;
+  border: 2px solid white;
+}
+input{
+  flex-basis: 200%;
+}
+#weatherData{
   border: 2px solid white;
 }
 
